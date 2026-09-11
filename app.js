@@ -1,14 +1,16 @@
-// ================================
+// ========================================
 // EduVora Mini App
 // app.js
-// ================================
+// ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("🚀 EduVora Mini App ishga tushdi");
 
-    // ================================
-    // Telegram WebApp
-    // ================================
+    console.log("🚀 EduVora ishga tushdi");
+
+
+    // ========================================
+    // TELEGRAM WEB APP
+    // ========================================
 
     const tg = window.Telegram?.WebApp;
 
@@ -17,525 +19,926 @@ document.addEventListener("DOMContentLoaded", () => {
         tg.expand();
     }
 
-    // ================================
-    // RANDOM BACKGROUND
-    // ================================
 
-    const EDUVORA_BACKGROUNDS = [
-        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1920&q=85",
-        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1920&q=85",
-        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1920&q=85",
-        "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=1920&q=85",
-        "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1920&q=85",
-        "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1920&q=85"
+    // ========================================
+    // RANDOM BACKGROUND
+    // ========================================
+
+    const backgrounds = [
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1920&q=80",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80",
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1920&q=80",
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1920&q=80",
+        "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1920&q=80"
     ];
 
-    function setEduVoraRandomBackground() {
-        if (!EDUVORA_BACKGROUNDS.length) return;
+    const randomBackground =
+        backgrounds[
+            Math.floor(Math.random() * backgrounds.length)
+        ];
 
-        const lastIndex = Number(
-            localStorage.getItem("eduvora_bg_index")
-        );
+    document.documentElement.style.setProperty(
+        "--edu-bg",
+        `url("${randomBackground}")`
+    );
 
-        let randomIndex;
 
-        do {
-            randomIndex = Math.floor(
-                Math.random() * EDUVORA_BACKGROUNDS.length
-            );
-        } while (
-            EDUVORA_BACKGROUNDS.length > 1 &&
-            randomIndex === lastIndex
-        );
+    // ========================================
+    // ELEMENTS
+    // ========================================
 
-        const background =
-            EDUVORA_BACKGROUNDS[randomIndex];
+    const pages =
+        document.querySelectorAll(".page");
 
-        // Keyingi kirishda oldingi fonni bilish uchun saqlaymiz
-        localStorage.setItem(
-            "eduvora_bg_index",
-            randomIndex
-        );
+    const navItems =
+        document.querySelectorAll(".nav-item");
 
-        // CSS variable orqali fonni beramiz
-        document.documentElement.style.setProperty(
-            "--edu-bg",
-            `url("${background}")`
-        );
+    const searchInput =
+        document.querySelector("#searchInput");
 
-        console.log(
-            `🖼️ EduVora background: ${randomIndex + 1}`
-        );
-    }
 
-    // Fonni ishga tushirish
-    setEduVoraRandomBackground();
+    // ========================================
+    // DATA
+    // ========================================
 
-    // ================================
-    // ELEMENTLAR
-    // ================================
+    const subjects = [
 
-    const pages = document.querySelectorAll(".page");
-    const navItems = document.querySelectorAll("[data-page]");
-    const searchInput = document.querySelector("#searchInput");
+        {
+            id: "math",
+            name: "Matematika",
+            icon: "📐",
+            description: "Matematika fanini bosqichma-bosqich o‘rganing."
+        },
 
-    // ================================
-    // SAHIFA ALMASHTIRISH
-    // ================================
+        {
+            id: "uzbek",
+            name: "Ona tili",
+            icon: "📖",
+            description: "Ona tili bo‘yicha mavzular."
+        },
+
+        {
+            id: "english",
+            name: "Ingliz tili",
+            icon: "🇬🇧",
+            description: "Ingliz tilini o‘rganish uchun mavzular."
+        },
+
+        {
+            id: "physics",
+            name: "Fizika",
+            icon: "⚛️",
+            description: "Fizika asoslari va mavzular."
+        },
+
+        {
+            id: "chemistry",
+            name: "Kimyo",
+            icon: "🧪",
+            description: "Kimyo fanining asosiy mavzulari."
+        },
+
+        {
+            id: "biology",
+            name: "Biologiya",
+            icon: "🧬",
+            description: "Biologiya fanini o‘rganing."
+        },
+
+        {
+            id: "history",
+            name: "Tarix",
+            icon: "🏛️",
+            description: "O‘zbekiston va jahon tarixi."
+        },
+
+        {
+            id: "informatics",
+            name: "Informatika",
+            icon: "💻",
+            description: "Informatika va dasturlash asoslari."
+        }
+
+    ];
+
+
+    // ========================================
+    // TOPICS
+    // ========================================
+
+    const topics = {
+
+        math: [
+            {
+                title: "1-mavzu",
+                name: "Natural sonlar",
+                content: `
+                    <h3>Natural sonlar</h3>
+
+                    <p>
+                        Natural sonlar sanashda ishlatiladigan
+                        musbat butun sonlardir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            1, 2, 3, 4, 5, 6, ...
+                        </p>
+                    </div>
+
+                    <p>
+                        Natural sonlar odatda N harfi bilan
+                        belgilanadi.
+                    </p>
+                `
+            },
+
+            {
+                title: "2-mavzu",
+                name: "Qo‘shish va ayirish",
+                content: `
+                    <h3>Qo‘shish va ayirish</h3>
+
+                    <p>
+                        Qo‘shish ikki yoki undan ortiq sonlarni
+                        birlashtirish amalidir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            5 + 3 = 8
+                        </p>
+                    </div>
+
+                    <p>
+                        Ayirish esa bir sondan boshqa sonni
+                        ayirish amalidir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            9 − 4 = 5
+                        </p>
+                    </div>
+                `
+            },
+
+            {
+                title: "3-mavzu",
+                name: "Ko‘paytirish",
+                content: `
+                    <h3>Ko‘paytirish</h3>
+
+                    <p>
+                        Ko‘paytirish bir xil sonni bir necha
+                        marta qo‘shishning qisqa ko‘rinishidir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            4 × 3 = 12
+                        </p>
+                    </div>
+                `
+            },
+
+            {
+                title: "4-mavzu",
+                name: "Bo‘lish",
+                content: `
+                    <h3>Bo‘lish</h3>
+
+                    <p>
+                        Bo‘lish sonni teng qismlarga ajratish
+                        amalidir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            12 ÷ 3 = 4
+                        </p>
+                    </div>
+                `
+            }
+        ],
+
+
+        uzbek: [
+            {
+                title: "1-mavzu",
+                name: "So‘z va uning ma'nosi",
+                content: `
+                    <h3>So‘z va uning ma'nosi</h3>
+
+                    <p>
+                        So‘z ma'lum bir ma'noni bildiradi.
+                        Tilimizdagi barcha gaplar so‘zlardan
+                        tashkil topadi.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            Kitob, maktab, o‘quvchi, bilim.
+                        </p>
+                    </div>
+                `
+            },
+
+            {
+                title: "2-mavzu",
+                name: "Ot so‘z turkumi",
+                content: `
+                    <h3>Ot so‘z turkumi</h3>
+
+                    <p>
+                        Shaxs, narsa, joy va tushuncha nomlarini
+                        bildirgan so‘zlar ot deyiladi.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            O‘quvchi, kitob, maktab, shahar.
+                        </p>
+                    </div>
+                `
+            },
+
+            {
+                title: "3-mavzu",
+                name: "Sifat",
+                content: `
+                    <h3>Sifat</h3>
+
+                    <p>
+                        Sifat predmetning belgisini bildiradi.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            Chiroyli, katta, kichik, aqlli.
+                        </p>
+                    </div>
+                `
+            }
+        ],
+
+
+        english: [
+            {
+                title: "1-mavzu",
+                name: "Alphabet",
+                content: `
+                    <h3>English Alphabet</h3>
+
+                    <p>
+                        Ingliz alifbosida 26 ta harf mavjud.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            A, B, C, D, E ...
+                        </p>
+                    </div>
+                `
+            },
+
+            {
+                title: "2-mavzu",
+                name: "To be",
+                content: `
+                    <h3>To be</h3>
+
+                    <p>
+                        Ingliz tilida am, is va are
+                        "to be" fe'lining shakllaridir.
+                    </p>
+
+                    <div class="lesson-example">
+                        <strong>Misol:</strong>
+
+                        <p>
+                            I am a student.
+                            <br>
+                            She is a teacher.
+                            <br>
+                            They are friends.
+                        </p>
+                    </div>
+                `
+            }
+        ],
+
+
+        physics: [
+            {
+                title: "1-mavzu",
+                name: "Fizika haqida",
+                content: `
+                    <h3>Fizika haqida</h3>
+
+                    <p>
+                        Fizika tabiatdagi hodisalarni,
+                        jismlarning harakatini va o‘zaro
+                        ta'sirini o‘rganadi.
+                    </p>
+                `
+            }
+        ],
+
+
+        chemistry: [
+            {
+                title: "1-mavzu",
+                name: "Kimyo faniga kirish",
+                content: `
+                    <h3>Kimyo faniga kirish</h3>
+
+                    <p>
+                        Kimyo moddalar, ularning tarkibi,
+                        tuzilishi va xossalarini o‘rganadi.
+                    </p>
+                `
+            }
+        ],
+
+
+        biology: [
+            {
+                title: "1-mavzu",
+                name: "Biologiya haqida",
+                content: `
+                    <h3>Biologiya</h3>
+
+                    <p>
+                        Biologiya tirik organizmlarni
+                        o‘rganadigan fan.
+                    </p>
+                `
+            }
+        ],
+
+
+        history: [
+            {
+                title: "1-mavzu",
+                name: "Tarix nima?",
+                content: `
+                    <h3>Tarix nima?</h3>
+
+                    <p>
+                        Tarix insoniyatning o‘tmishini
+                        o‘rganadigan fan.
+                    </p>
+                `
+            }
+        ],
+
+
+        informatics: [
+            {
+                title: "1-mavzu",
+                name: "Informatikaga kirish",
+                content: `
+                    <h3>Informatikaga kirish</h3>
+
+                    <p>
+                        Informatika axborotni olish,
+                        saqlash, qayta ishlash va uzatishni
+                        o‘rganadi.
+                    </p>
+                `
+            }
+        ]
+
+    };
+
+
+    // ========================================
+    // PAGE NAVIGATION
+    // ========================================
 
     function showPage(pageId) {
+
         pages.forEach(page => {
             page.classList.remove("active");
         });
 
-        const target = document.getElementById(pageId);
+        const target =
+            document.getElementById(pageId);
 
         if (target) {
             target.classList.add("active");
         }
 
         navItems.forEach(item => {
+
             item.classList.remove("active");
 
             if (item.dataset.page === pageId) {
                 item.classList.add("active");
             }
+
         });
 
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
+
     }
 
-    // ================================
-    // NAVIGATION
-    // ================================
 
-    navItems.forEach(item => {
-        item.addEventListener("click", () => {
-            const page = item.dataset.page;
+    // ========================================
+    // SUBJECT CARD
+    // ========================================
 
-            if (page) {
-                showPage(page);
-            }
+    function createSubjectCard(subject) {
+
+        const card =
+            document.createElement("button");
+
+        card.className = "subject-card";
+
+        card.innerHTML = `
+            <div class="subject-icon">
+                ${subject.icon}
+            </div>
+
+            <div class="subject-info">
+
+                <h3>
+                    ${subject.name}
+                </h3>
+
+                <p>
+                    ${subject.description}
+                </p>
+
+            </div>
+
+            <div class="subject-arrow">
+                →
+            </div>
+        `;
+
+        card.addEventListener("click", () => {
+            openSubject(subject.id);
         });
-    });
 
-    // ================================
-    // QUICK ACTIONS
-    // ================================
-
-    document.querySelectorAll("[data-action]").forEach(button => {
-        button.addEventListener("click", () => {
-            const action = button.dataset.action;
-
-            if (action === "subjects") {
-                showPage("subjectsPage");
-            }
-
-            if (action === "image") {
-                showPage("imagePage");
-            }
-
-            if (action === "help") {
-                showPage("helpPage");
-            }
-
-            if (action === "profile") {
-                showPage("profilePage");
-            }
-        });
-    });
-
-    // ================================
-    // FANLAR
-    // ================================
-
-    const subjects = [
-        {
-            id: "math",
-            name: "Matematika",
-            icon: "📐",
-            description: "1–11-sinf matematika darsliklari"
-        },
-        {
-            id: "uzbek",
-            name: "Ona tili",
-            icon: "📖",
-            description: "1–11-sinf ona tili"
-        },
-        {
-            id: "english",
-            name: "Ingliz tili",
-            icon: "🇬🇧",
-            description: "Ingliz tili darsliklari"
-        },
-        {
-            id: "physics",
-            name: "Fizika",
-            icon: "⚛️",
-            description: "Fizika darsliklari"
-        },
-        {
-            id: "chemistry",
-            name: "Kimyo",
-            icon: "🧪",
-            description: "Kimyo darsliklari"
-        },
-        {
-            id: "biology",
-            name: "Biologiya",
-            icon: "🧬",
-            description: "Biologiya darsliklari"
-        },
-        {
-            id: "history",
-            name: "Tarix",
-            icon: "🏛️",
-            description: "O‘zbekiston va jahon tarixi"
-        },
-        {
-            id: "informatics",
-            name: "Informatika",
-            icon: "💻",
-            description: "Informatika va dasturlash"
-        }
-    ];
-
-    // ================================
-    // SINFLAR
-    // ================================
-
-    const grades = [];
-
-    for (let i = 1; i <= 11; i++) {
-        grades.push({
-            id: i,
-            name: `${i}-sinf`
-        });
+        return card;
     }
 
-    // ================================
-    // SUBJECT CONTAINER
-    // ================================
 
-    const subjectContainer =
-        document.querySelector("#subjectsContainer");
+    // ========================================
+    // RENDER SUBJECTS
+    // ========================================
 
-    if (subjectContainer) {
-        subjectContainer.innerHTML = "";
+    function renderSubjects() {
 
-        subjects.forEach(subject => {
-            const card = document.createElement("div");
+        const homeContainer =
+            document.querySelector(
+                "#homeSubjectsContainer"
+            );
 
-            card.className = "subject-card";
-            card.dataset.subject = subject.name.toLowerCase();
+        const subjectsContainer =
+            document.querySelector(
+                "#subjectsContainer"
+            );
 
-            card.innerHTML = `
-                <div class="subject-icon">
-                    ${subject.icon}
-                </div>
 
-                <div class="subject-info">
-                    <h3>${subject.name}</h3>
-                    <p>${subject.description}</p>
-                </div>
+        if (homeContainer) {
 
-                <div class="subject-arrow">
-                    ›
-                </div>
-            `;
+            homeContainer.innerHTML = "";
 
-            card.addEventListener("click", () => {
-                openGrades(subject);
+            subjects.forEach(subject => {
+
+                homeContainer.appendChild(
+                    createSubjectCard(subject)
+                );
+
             });
 
-            subjectContainer.appendChild(card);
-        });
-    }
-
-    // ================================
-    // GRADE PAGE
-    // ================================
-
-    function openGrades(subject) {
-        const title = document.querySelector("#gradeTitle");
-        const container = document.querySelector("#gradesContainer");
-
-        if (title) {
-            title.textContent = `${subject.name} — Sinflar`;
         }
 
-        if (container) {
-            container.innerHTML = "";
 
-            grades.forEach(grade => {
-                const card = document.createElement("button");
+        if (subjectsContainer) {
 
-                card.className = "grade-card";
+            subjectsContainer.innerHTML = "";
 
-                card.innerHTML = `
-                    <span class="grade-number">
-                        ${grade.id}
-                    </span>
+            subjects.forEach(subject => {
 
-                    <span>
-                        ${grade.name}
-                    </span>
+                subjectsContainer.appendChild(
+                    createSubjectCard(subject)
+                );
 
-                    <span class="grade-arrow">
-                        ›
-                    </span>
-                `;
-
-                card.addEventListener("click", () => {
-                    openBooks(subject, grade.id);
-                });
-
-                container.appendChild(card);
             });
+
         }
 
-        showPage("gradesPage");
     }
 
-    // ================================
-    // KITOBLAR
-    // ================================
 
-    function openBooks(subject, grade) {
-        const title = document.querySelector("#booksTitle");
-        const container = document.querySelector("#booksContainer");
+    // ========================================
+    // OPEN SUBJECT
+    // ========================================
+
+    function openSubject(subjectId) {
+
+        const subject =
+            subjects.find(
+                item => item.id === subjectId
+            );
+
+        if (!subject) return;
+
+        const title =
+            document.querySelector("#topicsTitle");
 
         if (title) {
             title.textContent =
-                `${grade}-sinf ${subject.name}`;
+                subject.name;
         }
 
-        if (container) {
-            container.innerHTML = "";
 
-            const books = [
-                {
-                    title: `${grade}-sinf ${subject.name}`,
-                    type: "Darslik"
-                },
-                {
-                    title: `${grade}-sinf ${subject.name}`,
-                    type: "Mashqlar to‘plami"
-                },
-                {
-                    title: `${grade}-sinf ${subject.name}`,
-                    type: "Qo‘shimcha material"
-                }
-            ];
+        renderTopics(subjectId);
 
-            books.forEach(book => {
-                const card = document.createElement("div");
+        showPage("topicsPage");
+    }
 
-                card.className = "book-card";
+
+    // ========================================
+    // RENDER TOPICS
+    // ========================================
+
+    function renderTopics(subjectId) {
+
+        const container =
+            document.querySelector(
+                "#topicsContainer"
+            );
+
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        const subjectTopics =
+            topics[subjectId] || [];
+
+
+        if (subjectTopics.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+
+                    <div>
+                        📚
+                    </div>
+
+                    <h3>
+                        Mavzular tez orada
+                    </h3>
+
+                    <p>
+                        Ushbu fan uchun mavzular
+                        tayyorlanmoqda.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        subjectTopics.forEach(
+            (topic, index) => {
+
+                const card =
+                    document.createElement("button");
+
+                card.className =
+                    "topic-card";
 
                 card.innerHTML = `
-                    <div class="book-cover placeholder-cover">
-                        <span>📚</span>
+
+                    <div class="topic-number">
+                        ${index + 1}
                     </div>
 
-                    <div class="book-info">
-                        <h3>${book.title}</h3>
-                        <p>${book.type}</p>
+                    <div class="topic-info">
 
-                        <button class="primary-btn">
-                            📖 Ochish
-                        </button>
+                        <span>
+                            ${topic.title}
+                        </span>
+
+                        <h3>
+                            ${topic.name}
+                        </h3>
+
                     </div>
+
+                    <div class="topic-arrow">
+                        →
+                    </div>
+
                 `;
+
+                card.addEventListener(
+                    "click",
+                    () => {
+                        openTopic(
+                            subjectId,
+                            index
+                        );
+                    }
+                );
 
                 container.appendChild(card);
-            });
-        }
 
-        showPage("booksPage");
+            }
+        );
+
     }
 
-    // ================================
+
+    // ========================================
+    // OPEN TOPIC
+    // ========================================
+
+    let currentSubjectId = null;
+    let currentTopicIndex = 0;
+
+
+    function openTopic(
+        subjectId,
+        topicIndex
+    ) {
+
+        const subjectTopics =
+            topics[subjectId];
+
+        if (!subjectTopics) return;
+
+        const topic =
+            subjectTopics[topicIndex];
+
+        if (!topic) return;
+
+
+        currentSubjectId =
+            subjectId;
+
+        currentTopicIndex =
+            topicIndex;
+
+
+        const title =
+            document.querySelector(
+                "#topicDetailTitle"
+            );
+
+        const content =
+            document.querySelector(
+                "#topicContent"
+            );
+
+
+        if (title) {
+            title.textContent =
+                topic.name;
+        }
+
+        if (content) {
+            content.innerHTML =
+                topic.content;
+        }
+
+
+        updateTopicButtons();
+
+        showPage(
+            "topicDetailPage"
+        );
+
+    }
+
+
+    // ========================================
+    // TOPIC NAVIGATION
+    // ========================================
+
+    function updateTopicButtons() {
+
+        const previous =
+            document.querySelector(
+                "#previousTopic"
+            );
+
+        const next =
+            document.querySelector(
+                "#nextTopic"
+            );
+
+        const subjectTopics =
+            topics[currentSubjectId] || [];
+
+
+        if (previous) {
+
+            previous.disabled =
+                currentTopicIndex === 0;
+
+        }
+
+
+        if (next) {
+
+            next.disabled =
+                currentTopicIndex >=
+                subjectTopics.length - 1;
+
+        }
+
+    }
+
+
+    document
+        .querySelector("#previousTopic")
+        ?.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    currentTopicIndex <= 0
+                ) return;
+
+                openTopic(
+                    currentSubjectId,
+                    currentTopicIndex - 1
+                );
+
+            }
+        );
+
+
+    document
+        .querySelector("#nextTopic")
+        ?.addEventListener(
+            "click",
+            () => {
+
+                const subjectTopics =
+                    topics[currentSubjectId] || [];
+
+                if (
+                    currentTopicIndex >=
+                    subjectTopics.length - 1
+                ) return;
+
+                openTopic(
+                    currentSubjectId,
+                    currentTopicIndex + 1
+                );
+
+            }
+        );
+
+
+    // ========================================
+    // NAVIGATION
+    // ========================================
+
+    navItems.forEach(item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                const page =
+                    item.dataset.page;
+
+                if (page) {
+                    showPage(page);
+                }
+
+            }
+        );
+
+    });
+
+
+    // ========================================
+    // BACK BUTTON
+    // ========================================
+
+    document
+        .querySelectorAll("[data-back]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const page =
+                        button.dataset.back;
+
+                    if (page) {
+                        showPage(page);
+                    }
+
+                }
+            );
+
+        });
+
+
+    // ========================================
     // SEARCH
-    // ================================
+    // ========================================
 
     if (searchInput) {
-        searchInput.addEventListener("input", () => {
-            const query =
-                searchInput.value.trim().toLowerCase();
 
-            const cards =
-                document.querySelectorAll(".subject-card");
+        searchInput.addEventListener(
+            "input",
+            () => {
 
-            cards.forEach(card => {
-                const text =
-                    card.textContent.toLowerCase();
+                const query =
+                    searchInput.value
+                        .trim()
+                        .toLowerCase();
 
-                if (!query || text.includes(query)) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        });
+
+                const cards =
+                    document.querySelectorAll(
+                        "#homeSubjectsContainer .subject-card"
+                    );
+
+
+                cards.forEach(card => {
+
+                    const text =
+                        card.textContent
+                            .toLowerCase();
+
+                    card.style.display =
+                        !query ||
+                        text.includes(query)
+                            ? ""
+                            : "none";
+
+                });
+
+            }
+        );
+
     }
 
-    // ================================
-    // ORQAGA QAYTISH
-    // ================================
 
-    document.querySelectorAll("[data-back]").forEach(button => {
-        button.addEventListener("click", () => {
-            const page = button.dataset.back;
-
-            if (page) {
-                showPage(page);
-            }
-        });
-    });
-
-    // ================================
-    // RASM YUKLASH
-    // ================================
-
-    const imageInput =
-        document.querySelector("#imageInput");
-
-    const imagePreview =
-        document.querySelector("#imagePreview");
-
-    const solveButton =
-        document.querySelector("#solveImage");
-
-    if (imageInput) {
-        imageInput.addEventListener("change", () => {
-            const file = imageInput.files[0];
-
-            if (!file) return;
-
-            if (!file.type.startsWith("image/")) {
-                showToast("Faqat rasm yuklang.");
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = event => {
-                if (imagePreview) {
-                    imagePreview.src = event.target.result;
-                    imagePreview.style.display = "block";
-                }
-            };
-
-            reader.readAsDataURL(file);
-
-            if (solveButton) {
-                solveButton.style.display = "block";
-            }
-        });
-    }
-
-    // ================================
-    // RASMNI YECHISH
-    // ================================
-
-    if (solveButton) {
-        solveButton.addEventListener("click", () => {
-
-            const result =
-                document.querySelector("#imageResult");
-
-            if (result) {
-                result.style.display = "block";
-
-                result.innerHTML = `
-                    <div class="result-card">
-                        <div class="result-icon">
-                            🧠
-                        </div>
-
-                        <h3>AI tizimi tayyorlanmoqda</h3>
-
-                        <p>
-                            Rasmni o‘qish va masalani yechish
-                            funksiyasi keyingi bosqichda
-                            AI backend bilan ulanadi.
-                        </p>
-                    </div>
-                `;
-            }
-        });
-    }
-
-    // ================================
-    // JAVOBNI NUSXALASH
-    // ================================
-
-    document.addEventListener("click", event => {
-
-        const button =
-            event.target.closest("[data-copy]");
-
-        if (!button) return;
-
-        const text =
-            button.dataset.copy || "";
-
-        navigator.clipboard.writeText(text)
-            .then(() => {
-                showToast("Javob nusxalandi 📋");
-            })
-            .catch(() => {
-                showToast("Nusxalash amalga oshmadi.");
-            });
-    });
-
-    // ================================
-    // QADAMLARNI KO‘RSATISH
-    // ================================
-
-    document.addEventListener("click", event => {
-
-        const button =
-            event.target.closest("[data-steps]");
-
-        if (!button) return;
-
-        const steps =
-            document.querySelector("#solutionSteps");
-
-        if (!steps) return;
-
-        steps.classList.toggle("show");
-
-        if (steps.classList.contains("show")) {
-            button.textContent =
-                "🔽 Yechimni yashirish";
-        } else {
-            button.textContent =
-                "📖 Qanday ishlanganini ko‘rish";
-        }
-    });
-
-    // ================================
-    // YORDAMCHI
-    // ================================
+    // ========================================
+    // ASSISTANT
+    // ========================================
 
     const helpInput =
-        document.querySelector("#helpInput");
+        document.querySelector(
+            "#helpInput"
+        );
 
     const helpSend =
-        document.querySelector("#helpSend");
+        document.querySelector(
+            "#helpSend"
+        );
 
     const helpMessages =
-        document.querySelector("#helpMessages");
+        document.querySelector(
+            "#helpMessages"
+        );
 
-    function addHelpMessage(text, type = "bot") {
+
+    function addAssistantMessage(
+        text,
+        type = "bot"
+    ) {
 
         if (!helpMessages) return;
+
 
         const message =
             document.createElement("div");
@@ -543,222 +946,175 @@ document.addEventListener("DOMContentLoaded", () => {
         message.className =
             `help-message ${type}`;
 
-        message.textContent = text;
+        message.textContent =
+            text;
 
-        helpMessages.appendChild(message);
+        helpMessages.appendChild(
+            message
+        );
 
         helpMessages.scrollTop =
             helpMessages.scrollHeight;
+
     }
 
-    function eduVoraHelp(question) {
 
-        const q = question.toLowerCase();
+    function assistantAnswer(question) {
+
+        const q =
+            question
+                .toLowerCase()
+                .trim();
+
 
         if (
-            q.includes("7-sinf") &&
-            q.includes("matematika") &&
-            (
-                q.includes("darslik") ||
-                q.includes("kitob") ||
-                q.includes("bormi")
-            )
+            q.includes("matematika")
         ) {
-            return {
-                text:
-                    "📘 7-sinf Matematika darsligi EduVora’da mavjud.",
-                button:
-                    "📖 7-sinf Matematikani ochish"
-            };
+
+            return `
+📐 Matematika fanida hozircha bir nechta mavzu mavjud.
+
+Fanlar → Matematika bo‘limidan barcha mavzularni ko‘rishingiz mumkin.
+            `.trim();
+
         }
 
+
         if (
-            q.includes("premium") &&
+            q.includes("ona tili")
+        ) {
+
+            return `
+📖 Ona tili fanida so‘z, ot va sifat kabi mavzular mavjud.
+
+Fanlar → Ona tili bo‘limiga kirib ko‘rishingiz mumkin.
+            `.trim();
+
+        }
+
+
+        if (
             q.includes("eduvora")
         ) {
-            return {
-                text:
-                    "⭐ EduVora Premium — platformadagi qo‘shimcha imkoniyatlardan foydalanish uchun mo‘ljallangan premium xizmat.",
-                button: null
-            };
+
+            return `
+🎓 EduVora — fanlarni va mavzularni bosqichma-bosqich o‘rganishga yordam beruvchi ta'lim platformasi.
+            `.trim();
+
         }
+
 
         if (
-            q.includes("real madrid") ||
-            q.includes("futbol") ||
-            q.includes("gol") ||
-            q.includes("ob-havo") ||
-            q.includes("bitcoin")
+            q.includes("yordam") ||
+            q.includes("o‘qish") ||
+            q.includes("oqish")
         ) {
-            return {
-                text:
-                    "ℹ️ Bu savol EduVora yordamchisi doirasiga kirmaydi.\n\nMen faqat EduVora platformasi, darsliklar, fanlar va xizmatlari haqida ma’lumot beraman.",
-                button: null
-            };
+
+            return `
+📚 Albatta. EduVora’da Fanlar bo‘limidan kerakli fanni tanlang va mavzularni birma-bir o‘rganing.
+            `.trim();
+
         }
 
-        return {
-            text:
-                "🤖 Bu savol bo‘yicha hozircha EduVora ma’lumotlar bazasida tasdiqlangan ma’lumot topilmadi.",
-            button: null
-        };
+
+        return `
+🤖 Hozircha bu savol bo‘yicha aniq javobim yo‘q.
+
+Fanlar yoki EduVora platformasi haqida savol berib ko‘ring.
+        `.trim();
+
     }
 
-    if (helpSend && helpInput) {
 
-        function sendHelp() {
+    function sendAssistantMessage() {
 
-            const question =
-                helpInput.value.trim();
+        if (!helpInput) return;
 
-            if (!question) return;
 
-            addHelpMessage(question, "user");
+        const question =
+            helpInput.value.trim();
 
-            helpInput.value = "";
 
-            setTimeout(() => {
+        if (!question) return;
 
-                const answer =
-                    eduVoraHelp(question);
 
-                addHelpMessage(
-                    answer.text,
-                    "bot"
-                );
-
-                if (answer.button) {
-
-                    const button =
-                        document.createElement("button");
-
-                    button.className =
-                        "primary-btn help-open-btn";
-
-                    button.textContent =
-                        answer.button;
-
-                    button.addEventListener(
-                        "click",
-                        () => {
-                            openGrades(
-                                subjects[0],
-                                7
-                            );
-                        }
-                    );
-
-                    helpMessages.appendChild(button);
-                }
-
-            }, 500);
-        }
-
-        helpSend.addEventListener(
-            "click",
-            sendHelp
+        addAssistantMessage(
+            question,
+            "user"
         );
 
-        helpInput.addEventListener(
-            "keydown",
-            event => {
-                if (event.key === "Enter") {
-                    sendHelp();
-                }
-            }
-        );
-    }
 
-    // ================================
-    // BOOK CAROUSEL
-    // ================================
+        helpInput.value = "";
 
-    const carousel =
-        document.querySelector(".books-carousel");
-
-    if (carousel) {
-
-        let autoSlide;
-
-        function startAutoSlide() {
-
-            clearInterval(autoSlide);
-
-            autoSlide = setInterval(() => {
-
-                const maxScroll =
-                    carousel.scrollWidth -
-                    carousel.clientWidth;
-
-                if (carousel.scrollLeft >= maxScroll - 10) {
-
-                    carousel.scrollTo({
-                        left: 0,
-                        behavior: "smooth"
-                    });
-
-                } else {
-
-                    carousel.scrollBy({
-                        left: 220,
-                        behavior: "smooth"
-                    });
-                }
-
-            }, 3500);
-        }
-
-        startAutoSlide();
-
-        carousel.addEventListener(
-            "touchstart",
-            () => {
-                clearInterval(autoSlide);
-            },
-            { passive: true }
-        );
-
-        carousel.addEventListener(
-            "touchend",
-            () => {
-                startAutoSlide();
-            },
-            { passive: true }
-        );
-    }
-
-    // ================================
-    // TOAST
-    // ================================
-
-    function showToast(message) {
-
-        let toast =
-            document.querySelector("#toast");
-
-        if (!toast) {
-
-            toast =
-                document.createElement("div");
-
-            toast.id = "toast";
-            toast.className = "toast";
-
-            document.body.appendChild(toast);
-        }
-
-        toast.textContent = message;
-
-        toast.classList.add("show");
 
         setTimeout(() => {
-            toast.classList.remove("show");
-        }, 2500);
+
+            const answer =
+                assistantAnswer(
+                    question
+                );
+
+            addAssistantMessage(
+                answer,
+                "bot"
+            );
+
+        }, 400);
+
     }
 
-    // ================================
+
+    helpSend?.addEventListener(
+        "click",
+        sendAssistantMessage
+    );
+
+
+    helpInput?.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+                sendAssistantMessage();
+            }
+
+        }
+    );
+
+
+    // ========================================
+    // ASSISTANT EXAMPLES
+    // ========================================
+
+    document
+        .querySelectorAll(
+            ".example-question"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const question =
+                        button.dataset.question;
+
+                    if (!question) return;
+
+                    helpInput.value =
+                        question;
+
+                    sendAssistantMessage();
+
+                }
+            );
+
+        });
+
+
+    // ========================================
     // TELEGRAM USER
-    // ================================
+    // ========================================
 
     if (tg?.initDataUnsafe?.user) {
 
@@ -766,17 +1122,27 @@ document.addEventListener("DOMContentLoaded", () => {
             tg.initDataUnsafe.user;
 
         const nameElement =
-            document.querySelector("#profileName");
+            document.querySelector(
+                "#profileName"
+            );
 
         if (nameElement) {
+
             nameElement.textContent =
-                user.first_name || "Foydalanuvchi";
+                user.first_name ||
+                "Foydalanuvchi";
+
         }
+
     }
 
-    // ================================
-    // DEFAULT PAGE
-    // ================================
+
+    // ========================================
+    // START
+    // ========================================
+
+    renderSubjects();
 
     showPage("homePage");
+
 });
