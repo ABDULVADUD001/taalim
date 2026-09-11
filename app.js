@@ -9,9 +9,26 @@ if (tg) {
     tg.expand();
 }
 
+
 // =========================================================
-// DATA
+// API CONFIG
 // =========================================================
+//
+// Keyin bu yerga Railway backend manzilini qo'yamiz.
+//
+// Masalan:
+// const API_URL = "https://eduvora-api.up.railway.app";
+//
+// Hozircha o'zingning Railway URL'ingni yozmaguningcha
+// Assistant ishlamaydi.
+//
+
+const API_URL = "https://YOUR-RAILWAY-DOMAIN";
+
+
+/* ========================================================
+   DATA
+======================================================== */
 
 const subjects = [
     {
@@ -107,9 +124,10 @@ const subjects = [
     }
 ];
 
-// =========================================================
-// STATE
-// =========================================================
+
+/* ========================================================
+   STATE
+======================================================== */
 
 let currentSubject = null;
 let currentTopicIndex = 0;
@@ -118,12 +136,15 @@ let learnedTopics = 0;
 let learnedSubjects = new Set();
 
 let assistantStarted = false;
+let assistantBusy = false;
 
-// =========================================================
-// PAGE SYSTEM
-// =========================================================
+
+/* ========================================================
+   PAGE SYSTEM
+======================================================== */
 
 function showPage(pageId) {
+
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -156,17 +177,21 @@ function showPage(pageId) {
     }
 }
 
-// =========================================================
-// SUBJECT CARD
-// =========================================================
+
+/* ========================================================
+   SUBJECT CARD
+======================================================== */
 
 function createSubjectCard(subject) {
+
     const card = document.createElement("button");
 
     card.className = "subject-card";
 
     card.innerHTML = `
-        <div class="subject-icon">${subject.icon}</div>
+        <div class="subject-icon">
+            ${subject.icon}
+        </div>
 
         <div class="subject-name">
             ${subject.name}
@@ -184,11 +209,13 @@ function createSubjectCard(subject) {
     return card;
 }
 
-// =========================================================
-// SUBJECTS
-// =========================================================
+
+/* ========================================================
+   SUBJECTS
+======================================================== */
 
 function renderSubjects() {
+
     const homeContainer =
         document.getElementById("homeSubjectsContainer");
 
@@ -196,19 +223,24 @@ function renderSubjects() {
         document.getElementById("subjectsContainer");
 
     if (homeContainer) {
+
         homeContainer.innerHTML = "";
 
         subjects.forEach(subject => {
+
             homeContainer.appendChild(
                 createSubjectCard(subject)
             );
+
         });
     }
 
     if (subjectsContainer) {
+
         subjectsContainer.innerHTML = "";
 
         subjects.forEach(subject => {
+
             const card = document.createElement("button");
 
             card.className = "subject-list-card";
@@ -220,6 +252,7 @@ function renderSubjects() {
 
                 <div class="subject-list-info">
                     <strong>${subject.name}</strong>
+
                     <span>
                         ${subject.topics.length} ta mavzu
                     </span>
@@ -235,15 +268,18 @@ function renderSubjects() {
             });
 
             subjectsContainer.appendChild(card);
+
         });
     }
 }
 
-// =========================================================
-// OPEN SUBJECT
-// =========================================================
+
+/* ========================================================
+   OPEN SUBJECT
+======================================================== */
 
 function openSubject(subjectId) {
+
     const subject = subjects.find(
         item => item.id === subjectId
     );
@@ -260,11 +296,13 @@ function openSubject(subjectId) {
     showPage("topicsPage");
 }
 
-// =========================================================
-// RENDER TOPICS
-// =========================================================
+
+/* ========================================================
+   RENDER TOPICS
+======================================================== */
 
 function renderTopics(subject) {
+
     const container =
         document.getElementById("topicsContainer");
 
@@ -273,6 +311,7 @@ function renderTopics(subject) {
     container.innerHTML = "";
 
     subject.topics.forEach((topic, index) => {
+
         const card = document.createElement("button");
 
         card.className = "topic-card";
@@ -284,6 +323,7 @@ function renderTopics(subject) {
 
             <div class="topic-info">
                 <strong>${topic}</strong>
+
                 <span>
                     ${index + 1}-mavzu
                 </span>
@@ -299,14 +339,17 @@ function renderTopics(subject) {
         });
 
         container.appendChild(card);
+
     });
 }
 
-// =========================================================
-// OPEN TOPIC
-// =========================================================
+
+/* ========================================================
+   OPEN TOPIC
+======================================================== */
 
 function openTopic(subjectId, topicIndex) {
+
     const subject = subjects.find(
         item => item.id === subjectId
     );
@@ -321,7 +364,11 @@ function openTopic(subjectId, topicIndex) {
     document.getElementById("topicDetailTitle").textContent =
         topic;
 
-    renderTopicContent(subject, topic, topicIndex);
+    renderTopicContent(
+        subject,
+        topic,
+        topicIndex
+    );
 
     learnedTopics++;
 
@@ -332,11 +379,17 @@ function openTopic(subjectId, topicIndex) {
     showPage("topicDetailPage");
 }
 
-// =========================================================
-// TOPIC CONTENT
-// =========================================================
 
-function renderTopicContent(subject, topic, index) {
+/* ========================================================
+   TOPIC CONTENT
+======================================================== */
+
+function renderTopicContent(
+    subject,
+    topic,
+    index
+) {
+
     const content =
         document.getElementById("topicContent");
 
@@ -346,7 +399,8 @@ function renderTopicContent(subject, topic, index) {
         <h2>${topic}</h2>
 
         <p>
-            Bu mavzuda <strong>${topic}</strong>
+            Bu mavzuda
+            <strong>${topic}</strong>
             haqida asosiy tushunchalarni o‘rganamiz.
         </p>
 
@@ -366,13 +420,15 @@ function renderTopicContent(subject, topic, index) {
         </p>
     `;
 
+
     if (subject.id === "math") {
+
         explanation = `
             <h2>${topic}</h2>
 
             <p>
-                <strong>${topic}</strong> — matematikaning
-                muhim mavzularidan biridir.
+                <strong>${topic}</strong>
+                — matematikaning muhim mavzularidan biridir.
             </p>
 
             <h3>📌 Asosiy tushuncha</h3>
@@ -409,11 +465,13 @@ function renderTopicContent(subject, topic, index) {
     updateTopicButtons();
 }
 
-// =========================================================
-// TOPIC NAVIGATION
-// =========================================================
+
+/* ========================================================
+   TOPIC NAVIGATION
+======================================================== */
 
 function updateTopicButtons() {
+
     const previous =
         document.getElementById("previousTopic");
 
@@ -436,7 +494,9 @@ function updateTopicButtons() {
         next.disabled ? "0.45" : "1";
 }
 
+
 function openPreviousTopic() {
+
     if (!currentSubject) return;
 
     if (currentTopicIndex <= 0) return;
@@ -447,7 +507,9 @@ function openPreviousTopic() {
     );
 }
 
+
 function openNextTopic() {
+
     if (!currentSubject) return;
 
     if (
@@ -463,11 +525,13 @@ function openNextTopic() {
     );
 }
 
-// =========================================================
-// ASSISTANT
-// =========================================================
+
+/* ========================================================
+   ASSISTANT START
+======================================================== */
 
 function startAssistant() {
+
     const messages =
         document.getElementById("helpMessages");
 
@@ -484,17 +548,21 @@ function startAssistant() {
     );
 
     setTimeout(() => {
+
         addAssistantMessage(
-            "Sizga masalalar, savollar va mavzularni tushuntirishda yordam beraman. Savolingizni yozing."
+            "Savolingizni yozing. Masalalar, fanlar, mavzular, dasturlash va kod xatolarida yordam beraman."
         );
+
     }, 450);
 }
 
-// =========================================================
-// ASSISTANT MESSAGE
-// =========================================================
+
+/* ========================================================
+   ASSISTANT MESSAGE
+======================================================== */
 
 function addAssistantMessage(text) {
+
     const container =
         document.getElementById("helpMessages");
 
@@ -513,7 +581,9 @@ function addAssistantMessage(text) {
     scrollAssistant();
 }
 
+
 function addUserMessage(text) {
+
     const container =
         document.getElementById("helpMessages");
 
@@ -532,101 +602,36 @@ function addUserMessage(text) {
     scrollAssistant();
 }
 
+
 function scrollAssistant() {
+
     const messages =
         document.getElementById("helpMessages");
 
     if (!messages) return;
 
     setTimeout(() => {
+
         messages.scrollTop =
             messages.scrollHeight;
+
     }, 50);
 }
 
-// =========================================================
-// ASSISTANT RESPONSE
-// =========================================================
 
-function getAssistantResponse(question) {
-    const text =
-        question
-            .toLowerCase()
-            .trim();
+/* ========================================================
+   TYPING
+======================================================== */
 
-    if (!text) {
-        return "Savolingizni yozing, men yordam beraman. 😊";
-    }
+function showTyping() {
 
-    // MATEMATIKA
+    const container =
+        document.getElementById("helpMessages");
 
-    if (
-        text.includes("2+2") ||
-        text.includes("2 + 2")
-    ) {
-        return "2 + 2 = 4 ✅";
-    }
+    if (!container) return;
 
-    if (
-        text.includes("5+5") ||
-        text.includes("5 + 5")
-    ) {
-        return "5 + 5 = 10 ✅";
-    }
+    removeTyping();
 
-    // EDUVERA
-
-    if (
-        text.includes("eduvora nima") ||
-        text.includes("eduvora")
-    ) {
-        return "EduVora — fanlar va mavzularni bosqichma-bosqich o‘rganishga yordam beradigan ta’lim platformasi. 📚";
-    }
-
-    // SALOM
-
-    if (
-        text === "salom" ||
-        text === "assalomu alaykum" ||
-        text.includes("hello")
-    ) {
-        return "Salom! 👋 Qanday savolingiz bor?";
-    }
-
-    // YORDAM
-
-    if (
-        text.includes("yordam") ||
-        text.includes("help")
-    ) {
-        return "Albatta! Savolingizni yozing. Masalan, matematika masalasini yuborsangiz, uni tushuntirishga harakat qilaman. 🤖";
-    }
-
-    // DEFAULT
-
-    return "Savolingizni tushundim. 🤔 Hozircha men asosiy savollar va oddiy misollar bilan ishlayman. Savolni aniqroq yozib ko‘ring.";
-}
-
-// =========================================================
-// SEND ASSISTANT MESSAGE
-// =========================================================
-
-function sendAssistantMessage() {
-    const input =
-        document.getElementById("helpInput");
-
-    if (!input) return;
-
-    const question =
-        input.value.trim();
-
-    if (!question) return;
-
-    addUserMessage(question);
-
-    input.value = "";
-
-    // kichik typing effekt
     const typing =
         document.createElement("div");
 
@@ -639,34 +644,147 @@ function sendAssistantMessage() {
     typing.id =
         "assistantTyping";
 
-    document
-        .getElementById("helpMessages")
-        .appendChild(typing);
+    container.appendChild(typing);
 
     scrollAssistant();
-
-    setTimeout(() => {
-        const oldTyping =
-            document.getElementById(
-                "assistantTyping"
-            );
-
-        if (oldTyping) {
-            oldTyping.remove();
-        }
-
-        const answer =
-            getAssistantResponse(question);
-
-        addAssistantMessage(answer);
-    }, 500);
 }
 
-// =========================================================
-// PROFILE
-// =========================================================
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "assistantTyping"
+        );
+
+    if (typing) {
+        typing.remove();
+    }
+}
+
+
+/* ========================================================
+   REAL AI ASSISTANT
+======================================================== */
+
+async function askAssistant(question) {
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "message",
+        question
+    );
+
+
+    const response =
+        await fetch(
+            `${API_URL}/api/assistant`,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Server xatosi: ${response.status}`
+        );
+    }
+
+
+    const data =
+        await response.json();
+
+
+    if (!data.success) {
+
+        throw new Error(
+            data.detail ||
+            "Assistant javob bera olmadi."
+        );
+    }
+
+
+    return data.answer;
+}
+
+
+/* ========================================================
+   SEND ASSISTANT MESSAGE
+======================================================== */
+
+async function sendAssistantMessage() {
+
+    if (assistantBusy) return;
+
+    const input =
+        document.getElementById("helpInput");
+
+    if (!input) return;
+
+    const question =
+        input.value.trim();
+
+    if (!question) return;
+
+
+    assistantBusy = true;
+
+
+    addUserMessage(question);
+
+    input.value = "";
+
+    input.disabled = true;
+
+
+    showTyping();
+
+
+    try {
+
+        const answer =
+            await askAssistant(question);
+
+        removeTyping();
+
+        addAssistantMessage(answer);
+
+    } catch (error) {
+
+        console.error(
+            "EDUVORA ASSISTANT:",
+            error
+        );
+
+        removeTyping();
+
+        addAssistantMessage(
+            "⚠️ Assistant bilan bog‘lanib bo‘lmadi.\n\n" +
+            "Backend hali ulanmagan yoki serverda muammo bor."
+        );
+
+    } finally {
+
+        assistantBusy = false;
+
+        input.disabled = false;
+
+        input.focus();
+    }
+}
+
+
+/* ========================================================
+   PROFILE
+======================================================== */
 
 function updateProfile() {
+
     const topics =
         document.getElementById("profileTopics");
 
@@ -684,23 +802,28 @@ function updateProfile() {
     }
 }
 
-// =========================================================
-// TELEGRAM USER
-// =========================================================
+
+/* ========================================================
+   TELEGRAM USER
+======================================================== */
 
 function loadTelegramUser() {
+
     const nameElement =
         document.getElementById("profileName");
 
     if (!nameElement) return;
+
 
     if (
         tg &&
         tg.initDataUnsafe &&
         tg.initDataUnsafe.user
     ) {
+
         const user =
             tg.initDataUnsafe.user;
+
 
         const fullName =
             [
@@ -710,189 +833,264 @@ function loadTelegramUser() {
                 .filter(Boolean)
                 .join(" ");
 
+
         if (fullName) {
+
             nameElement.textContent =
                 fullName;
         }
     }
 }
 
-// =========================================================
-// SEARCH
-// =========================================================
+
+/* ========================================================
+   SEARCH
+======================================================== */
 
 function setupSearch() {
+
     const input =
         document.getElementById("searchInput");
 
     if (!input) return;
 
-    input.addEventListener("input", () => {
-        const query =
-            input.value
-                .toLowerCase()
-                .trim();
 
-        const container =
-            document.getElementById(
-                "homeSubjectsContainer"
-            );
+    input.addEventListener(
+        "input",
+        () => {
 
-        if (!container) return;
+            const query =
+                input.value
+                    .toLowerCase()
+                    .trim();
 
-        container.innerHTML = "";
 
-        if (!query) {
-            subjects.forEach(subject => {
-                container.appendChild(
-                    createSubjectCard(subject)
+            const container =
+                document.getElementById(
+                    "homeSubjectsContainer"
                 );
-            });
 
-            return;
-        }
 
-        const results =
-            subjects.filter(subject => {
-                const subjectMatch =
-                    subject.name
-                        .toLowerCase()
-                        .includes(query);
+            if (!container) return;
 
-                const topicMatch =
-                    subject.topics.some(topic =>
-                        topic
-                            .toLowerCase()
-                            .includes(query)
+
+            container.innerHTML = "";
+
+
+            if (!query) {
+
+                subjects.forEach(
+                    subject => {
+
+                        container.appendChild(
+                            createSubjectCard(subject)
+                        );
+
+                    }
+                );
+
+                return;
+            }
+
+
+            const results =
+                subjects.filter(
+                    subject => {
+
+                        const subjectMatch =
+                            subject.name
+                                .toLowerCase()
+                                .includes(query);
+
+
+                        const topicMatch =
+                            subject.topics.some(
+                                topic =>
+                                    topic
+                                        .toLowerCase()
+                                        .includes(query)
+                            );
+
+
+                        return (
+                            subjectMatch ||
+                            topicMatch
+                        );
+                    }
+                );
+
+
+            results.forEach(
+                subject => {
+
+                    container.appendChild(
+                        createSubjectCard(subject)
                     );
 
-                return subjectMatch || topicMatch;
-            });
-
-        results.forEach(subject => {
-            container.appendChild(
-                createSubjectCard(subject)
+                }
             );
-        });
 
-        if (results.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state"
-                     style="grid-column: 1 / -1;">
-                    <div class="empty-state-icon">
-                        🔎
+
+            if (results.length === 0) {
+
+                container.innerHTML = `
+                    <div
+                        class="empty-state"
+                        style="grid-column: 1 / -1;"
+                    >
+
+                        <div class="empty-state-icon">
+                            🔎
+                        </div>
+
+                        <h3>
+                            Hech narsa topilmadi
+                        </h3>
+
+                        <p>
+                            Boshqa fan yoki mavzu
+                            nomini yozib ko‘ring.
+                        </p>
+
                     </div>
+                `;
+            }
 
-                    <h3>Hech narsa topilmadi</h3>
-
-                    <p>
-                        Boshqa fan yoki mavzu nomini
-                        yozib ko‘ring.
-                    </p>
-                </div>
-            `;
         }
-    });
+    );
 }
 
-// =========================================================
-// NAVIGATION
-// =========================================================
+
+/* ========================================================
+   NAVIGATION
+======================================================== */
 
 function setupNavigation() {
+
     document
         .querySelectorAll(".nav-item")
         .forEach(item => {
+
             item.addEventListener(
                 "click",
                 () => {
+
                     const page =
                         item.dataset.page;
 
                     showPage(page);
+
                 }
             );
+
         });
+
 
     document
         .querySelectorAll("[data-back]")
         .forEach(button => {
+
             button.addEventListener(
                 "click",
                 () => {
+
                     showPage(
                         button.dataset.back
                     );
+
                 }
             );
+
         });
 }
 
-// =========================================================
-// ASSISTANT EVENTS
-// =========================================================
+
+/* ========================================================
+   ASSISTANT EVENTS
+======================================================== */
 
 function setupAssistant() {
+
     const sendButton =
         document.getElementById("helpSend");
 
     const input =
         document.getElementById("helpInput");
 
+
     if (sendButton) {
+
         sendButton.addEventListener(
             "click",
             sendAssistantMessage
         );
+
     }
 
+
     if (input) {
+
         input.addEventListener(
             "keydown",
             event => {
+
                 if (event.key === "Enter") {
+
                     event.preventDefault();
 
                     sendAssistantMessage();
+
                 }
+
             }
         );
+
     }
 }
 
-// =========================================================
-// TOPIC BUTTONS
-// =========================================================
+
+/* ========================================================
+   TOPIC BUTTONS
+======================================================== */
 
 function setupTopicNavigation() {
+
     const previous =
         document.getElementById("previousTopic");
 
     const next =
         document.getElementById("nextTopic");
 
+
     if (previous) {
+
         previous.addEventListener(
             "click",
             openPreviousTopic
         );
+
     }
 
+
     if (next) {
+
         next.addEventListener(
             "click",
             openNextTopic
         );
+
     }
 }
 
-// =========================================================
-// INITIALIZE
-// =========================================================
+
+/* ========================================================
+   INITIALIZE
+======================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
         renderSubjects();
 
         setupNavigation();
@@ -908,5 +1106,6 @@ document.addEventListener(
         updateProfile();
 
         showPage("homePage");
+
     }
 );
