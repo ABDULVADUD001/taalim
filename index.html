@@ -8,10 +8,17 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
+    <meta
+        name="theme-color"
+        content="#f4f6fa"
+    >
+
     <title>EduVora | Ta'lim platformasi</title>
 
+    <!-- Telegram WebApp -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,7 +26,9 @@
 
 <div id="app" class="app">
 
-    <!-- ================= HEADER ================= -->
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
     <header class="header">
 
@@ -30,8 +39,15 @@
             </div>
 
             <div class="brand-text">
-                <h1>EduVora</h1>
-                <span>Ta'lim platformasi</span>
+
+                <h1>
+                    EduVora
+                </h1>
+
+                <span>
+                    Ta'lim platformasi
+                </span>
+
             </div>
 
         </div>
@@ -39,22 +55,29 @@
     </header>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
 
     <main class="main">
 
-        <!-- ================= HOME ================= -->
+
+        <!-- =================================================
+             HOME
+             ================================================= -->
 
         <section
             id="homePage"
             class="page active"
         >
 
-            <!-- SEARCH -->
+            <!-- Search -->
 
             <div class="search-box">
 
-                <span class="search-icon">⌕</span>
+                <span class="search-icon">
+                    ⌕
+                </span>
 
                 <input
                     id="searchInput"
@@ -66,7 +89,7 @@
             </div>
 
 
-            <!-- WELCOME -->
+            <!-- Welcome -->
 
             <div class="welcome-card">
 
@@ -96,16 +119,20 @@
             </div>
 
 
-            <!-- SUBJECTS -->
+            <!-- Subjects -->
 
             <div class="section-header">
 
                 <div>
+
                     <span class="section-label">
                         TA'LIM
                     </span>
 
-                    <h2>Fanlar</h2>
+                    <h2>
+                        Fanlar
+                    </h2>
+
                 </div>
 
             </div>
@@ -119,7 +146,10 @@
         </section>
 
 
-        <!-- ================= SUBJECTS ================= -->
+
+        <!-- =================================================
+             SUBJECTS
+             ================================================= -->
 
         <section
             id="subjectsPage"
@@ -131,19 +161,25 @@
                 <button
                     class="back-btn"
                     data-back="homePage"
+                    aria-label="Orqaga"
                 >
                     ←
                 </button>
 
                 <div>
+
                     <span class="section-label">
                         EDUVORA
                     </span>
 
-                    <h2>Fanlar</h2>
+                    <h2>
+                        Fanlar
+                    </h2>
+
                 </div>
 
             </div>
+
 
             <div
                 id="subjectsContainer"
@@ -153,7 +189,10 @@
         </section>
 
 
-        <!-- ================= TOPICS ================= -->
+
+        <!-- =================================================
+             TOPICS
+             ================================================= -->
 
         <section
             id="topicsPage"
@@ -165,11 +204,13 @@
                 <button
                     class="back-btn"
                     data-back="subjectsPage"
+                    aria-label="Orqaga"
                 >
                     ←
                 </button>
 
                 <div>
+
                     <span class="section-label">
                         MAVZULAR
                     </span>
@@ -177,6 +218,7 @@
                     <h2 id="topicsTitle">
                         Fan
                     </h2>
+
                 </div>
 
             </div>
@@ -190,7 +232,10 @@
         </section>
 
 
-        <!-- ================= TOPIC DETAIL ================= -->
+
+        <!-- =================================================
+             TOPIC DETAIL
+             ================================================= -->
 
         <section
             id="topicDetailPage"
@@ -202,11 +247,13 @@
                 <button
                     class="back-btn"
                     data-back="topicsPage"
+                    aria-label="Orqaga"
                 >
                     ←
                 </button>
 
                 <div>
+
                     <span class="section-label">
                         MAVZU
                     </span>
@@ -214,6 +261,7 @@
                     <h2 id="topicDetailTitle">
                         1-mavzu
                     </h2>
+
                 </div>
 
             </div>
@@ -246,7 +294,10 @@
         </section>
 
 
-        <!-- ================= ASSISTANT ================= -->
+
+        <!-- =================================================
+             ASSISTANT
+             ================================================= -->
 
         <section
             id="assistantPage"
@@ -262,11 +313,15 @@
                     </div>
 
                     <div>
+
                         <span class="section-label">
                             EDUVORA
                         </span>
 
-                        <h2>EduVora Assistant</h2>
+                        <h2>
+                            EduVora Assistant
+                        </h2>
+
                     </div>
 
                 </div>
@@ -274,7 +329,12 @@
             </div>
 
 
+            <!-- Assistant -->
+
             <div class="assistant-card">
+
+
+                <!-- Welcome -->
 
                 <div class="assistant-welcome">
 
@@ -283,16 +343,18 @@
                     </div>
 
                     <h3>
-                        Salom! Men EduVora Assistant.
+                        EduVora Assistant
                     </h3>
 
                     <p>
-                        EduVora platformasi, fanlar va
-                        mavzular bo‘yicha yordam beraman.
+                        Savolingizni yozing.
+                        Men sizga yordam beraman.
                     </p>
 
                 </div>
 
+
+                <!-- Chat -->
 
                 <div
                     id="helpMessages"
@@ -300,31 +362,7 @@
                 ></div>
 
 
-                <div class="assistant-examples">
-
-                    <button
-                        class="example-question"
-                        data-question="Matematika fanida qanday mavzular bor?"
-                    >
-                        📐 Matematika mavzulari
-                    </button>
-
-                    <button
-                        class="example-question"
-                        data-question="EduVora nima?"
-                    >
-                        💡 EduVora nima?
-                    </button>
-
-                    <button
-                        class="example-question"
-                        data-question="Menga o‘qishda yordam ber"
-                    >
-                        📚 O‘qishda yordam
-                    </button>
-
-                </div>
-
+                <!-- Input -->
 
                 <div class="assistant-input">
 
@@ -333,11 +371,13 @@
                         type="text"
                         placeholder="Savolingizni yozing..."
                         autocomplete="off"
+                        enterkeyhint="send"
                     >
 
                     <button
                         id="helpSend"
                         class="send-btn"
+                        aria-label="Yuborish"
                     >
                         ➤
                     </button>
@@ -349,7 +389,10 @@
         </section>
 
 
-        <!-- ================= PROFILE ================= -->
+
+        <!-- =================================================
+             PROFILE
+             ================================================= -->
 
         <section
             id="profilePage"
@@ -359,11 +402,15 @@
             <div class="page-header">
 
                 <div>
+
                     <span class="section-label">
                         EDUVORA
                     </span>
 
-                    <h2>Profil</h2>
+                    <h2>
+                        Profil
+                    </h2>
+
                 </div>
 
             </div>
@@ -400,6 +447,7 @@
 
                 </div>
 
+
                 <div class="stat-card">
 
                     <strong id="profileSubjects">
@@ -419,16 +467,29 @@
     </main>
 
 
-    <!-- ================= BOTTOM NAV ================= -->
 
-    <nav class="bottom-nav">
+    <!-- =====================================================
+         BOTTOM NAVIGATION
+         ===================================================== -->
+
+    <nav
+        class="bottom-nav"
+        aria-label="Asosiy navigatsiya"
+    >
 
         <button
             class="nav-item active"
             data-page="homePage"
         >
-            <span>⌂</span>
-            <small>Bosh sahifa</small>
+
+            <span>
+                ⌂
+            </span>
+
+            <small>
+                Bosh sahifa
+            </small>
+
         </button>
 
 
@@ -436,8 +497,15 @@
             class="nav-item"
             data-page="subjectsPage"
         >
-            <span>📚</span>
-            <small>Fanlar</small>
+
+            <span>
+                📚
+            </span>
+
+            <small>
+                Fanlar
+            </small>
+
         </button>
 
 
@@ -445,8 +513,15 @@
             class="nav-item"
             data-page="assistantPage"
         >
-            <span>🤖</span>
-            <small>Assistant</small>
+
+            <span>
+                🤖
+            </span>
+
+            <small>
+                Assistant
+            </small>
+
         </button>
 
 
@@ -454,14 +529,25 @@
             class="nav-item"
             data-page="profilePage"
         >
-            <span>👤</span>
-            <small>Profil</small>
+
+            <span>
+                👤
+            </span>
+
+            <small>
+                Profil
+            </small>
+
         </button>
 
     </nav>
 
 </div>
 
+
+<!-- =========================================================
+     APP JS
+     ========================================================= -->
 
 <script src="app.js"></script>
 
