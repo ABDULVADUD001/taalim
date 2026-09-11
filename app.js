@@ -6,13 +6,70 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🚀 EduVora Mini App ishga tushdi");
 
+    // ================================
     // Telegram WebApp
+    // ================================
+
     const tg = window.Telegram?.WebApp;
 
     if (tg) {
         tg.ready();
         tg.expand();
     }
+
+    // ================================
+    // RANDOM BACKGROUND
+    // ================================
+
+    const EDUVORA_BACKGROUNDS = [
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1920&q=85",
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1920&q=85",
+        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1920&q=85",
+        "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=1920&q=85",
+        "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1920&q=85",
+        "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1920&q=85"
+    ];
+
+    function setEduVoraRandomBackground() {
+        if (!EDUVORA_BACKGROUNDS.length) return;
+
+        const lastIndex = Number(
+            localStorage.getItem("eduvora_bg_index")
+        );
+
+        let randomIndex;
+
+        do {
+            randomIndex = Math.floor(
+                Math.random() * EDUVORA_BACKGROUNDS.length
+            );
+        } while (
+            EDUVORA_BACKGROUNDS.length > 1 &&
+            randomIndex === lastIndex
+        );
+
+        const background =
+            EDUVORA_BACKGROUNDS[randomIndex];
+
+        // Keyingi kirishda oldingi fonni bilish uchun saqlaymiz
+        localStorage.setItem(
+            "eduvora_bg_index",
+            randomIndex
+        );
+
+        // CSS variable orqali fonni beramiz
+        document.documentElement.style.setProperty(
+            "--edu-bg",
+            `url("${background}")`
+        );
+
+        console.log(
+            `🖼️ EduVora background: ${randomIndex + 1}`
+        );
+    }
+
+    // Fonni ishga tushirish
+    setEduVoraRandomBackground();
 
     // ================================
     // ELEMENTLAR
@@ -259,10 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (container) {
             container.innerHTML = "";
 
-            // Hozircha demo ma'lumot.
-            // Keyinchalik haqiqiy darslik cover URL'lari
-            // backend/database orqali olinadi.
-
             const books = [
                 {
                     title: `${grade}-sinf ${subject.name}`,
@@ -391,18 +444,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (solveButton) {
         solveButton.addEventListener("click", () => {
-
-            /*
-             * Hozircha demo.
-             *
-             * Keyingi bosqichda:
-             *
-             * Rasm → Backend → AI Vision
-             *                    ↓
-             *              Masala javobi
-             *
-             * tizimi ulanadi.
-             */
 
             const result =
                 document.querySelector("#imageResult");
