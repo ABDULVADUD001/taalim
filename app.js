@@ -23,7 +23,7 @@ if (tg) {
 // Assistant ishlamaydi.
 //
 
-const API_URL = "https://YOUR-RAILWAY-DOMAIN";
+const API_URL = "https://taalim-production.up.railway.app";
 
 
 /* ========================================================
