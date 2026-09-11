@@ -20,7 +20,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN Railway Variables'da topilmadi!")
 
-WEBAPP_URL = "https://YOUR-GITHUB-USERNAME.github.io/eduvora/"
+WEBAPP_URL = "https://abdulvadud001.github.io/taalim/"
 
 
 # =========================
