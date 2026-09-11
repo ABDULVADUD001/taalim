@@ -24,6 +24,9 @@
     --shadow-md: 0 10px 30px rgba(16, 24, 40, 0.09);
 
     --transition: 0.22s ease;
+
+    /* Random background */
+    --edu-bg: none;
 }
 
 * {
@@ -39,14 +42,22 @@ html {
 
 body {
     min-height: 100vh;
+
     background:
-        radial-gradient(
-            circle at 90% 0%,
-            rgba(49, 94, 251, 0.08),
-            transparent 28%
+        linear-gradient(
+            rgba(245, 247, 251, 0.82),
+            rgba(245, 247, 251, 0.82)
         ),
+        var(--edu-bg),
         var(--bg);
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
     color: var(--text);
+
     font-family:
         Inter,
         -apple-system,
@@ -55,8 +66,13 @@ body {
         Roboto,
         Arial,
         sans-serif;
+
     line-height: 1.5;
     overflow-x: hidden;
+
+    transition:
+        background-image 0.8s ease,
+        background-color 0.3s ease;
 }
 
 button,
@@ -145,6 +161,7 @@ header {
     border-radius: 13px;
 
     color: #fff;
+
     background:
         linear-gradient(
             135deg,
@@ -167,8 +184,10 @@ header {
 
 .brand-subtitle {
     display: block;
+
     color: var(--muted);
     font-size: 11px;
+
     margin-top: -2px;
 }
 
@@ -260,6 +279,7 @@ input[type="text"]:focus {
     content: "";
 
     position: absolute;
+
     width: 180px;
     height: 180px;
 
@@ -697,6 +717,7 @@ input[type="text"]:focus {
     border-radius: 50%;
 
     color: white;
+
     background:
         linear-gradient(
             135deg,
@@ -714,6 +735,7 @@ input[type="text"]:focus {
 
 .profile-card p {
     margin-top: 3px;
+
     color: var(--muted);
     font-size: 13px;
 }
@@ -943,11 +965,11 @@ input[type="text"]:focus {
 
     body {
         background:
-            radial-gradient(
-                circle at 90% 0%,
-                rgba(49, 94, 251, 0.13),
-                transparent 28%
+            linear-gradient(
+                rgba(11, 16, 32, 0.78),
+                rgba(11, 16, 32, 0.78)
             ),
+            var(--edu-bg),
             var(--bg);
     }
 
@@ -1011,4 +1033,65 @@ img {
 
 .text-center {
     text-align: center;
+}
+
+/* =========================================================
+   RANDOM BACKGROUND — FINAL
+   ========================================================= */
+
+/*
+   JavaScript:
+   document.documentElement.style.setProperty(
+       "--edu-bg",
+       'url("IMAGE_URL")'
+   );
+*/
+
+body {
+    background-image:
+        linear-gradient(
+            rgba(245, 247, 251, 0.82),
+            rgba(245, 247, 251, 0.82)
+        ),
+        var(--edu-bg),
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f8fafc
+        );
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    transition:
+        background-image 0.8s ease-in-out;
+}
+
+/* Fon juda ko‘zga tashlanib ketmasligi uchun */
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.10)
+        );
+
+    z-index: -1;
+}
+
+/* Desktop'da EduVora oynasi */
+@media (min-width: 700px) {
+    #app,
+    .app {
+        overflow: hidden;
+    }
 }
