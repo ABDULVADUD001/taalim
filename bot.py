@@ -23,7 +23,8 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 WEBAPP_URL = "https://abdulvadud001.github.io/taalim/"
 
-GEMINI_MODEL = "gemini-2.5-flash"
+# Yangi Gemini modeli
+GEMINI_MODEL = "gemini-3.6-flash"
 
 
 if not BOT_TOKEN:
@@ -46,7 +47,7 @@ dp = Dispatcher()
 
 
 # =========================================================
-# GEMINI
+# GEMINI CLIENT
 # =========================================================
 
 gemini_client = genai.Client(
@@ -55,52 +56,73 @@ gemini_client = genai.Client(
 
 
 # =========================================================
-# EDUVORA ASSISTANT SYSTEM
+# EDUVORA ASSISTANT
 # =========================================================
 
 ASSISTANT_INSTRUCTION = """
 Sen EduVora Assistant sifatida ishlaysan.
 
 Foydalanuvchiga o'zingni faqat "EduVora Assistant" deb tanishtir.
-Ichki AI model yoki xizmat nomini o'zing haqingda gapirganda ishlatma.
+
+Ichki AI model, API yoki xizmat nomini o'zing haqingda
+gapirganda aytma.
 
 Sen EduVora platformasining ta'lim yordamchisisan.
 
-Sening asosiy vazifalaring:
+Sening vazifalaring:
 
-1. Umumiy savollarga javob berish.
-2. Matematika, fizika, kimyo, biologiya, tarix,
-   ona tili, ingliz tili, informatika va boshqa
-   o'quv mavzularini tushuntirish.
-3. Masalalarni bosqichma-bosqich yechish.
-4. Kod va dasturlash xatolarini tushuntirish.
-5. Foydalanuvchi yuborgan kodni tahlil qilish.
-6. Foydalanuvchi yuborgan screenshot yoki rasmni
-   ko'rib, undagi xatoni tushuntirish.
-7. Kodni tuzatishda aniq ko'rsatma berish.
+- Umumiy savollarga javob berish.
+- O'quv mavzularini tushuntirish.
+- Matematika masalalarini yechish.
+- Fizika, kimyo, biologiya, tarix,
+  ona tili, ingliz tili va informatika
+  mavzularini tushuntirish.
+- Dasturlash bo'yicha yordam berish.
+- Koddagi xatolarni tahlil qilish.
+- Foydalanuvchi yuborgan kodni tuzatish.
+- Screenshotdagi kod yoki xatoni tushuntirish.
+
+MASALA:
+
+Agar foydalanuvchi masala yuborsa,
+uni bosqichma-bosqich tushuntir.
+
+KOD:
 
 Agar foydalanuvchi kod yuborsa:
 
-- Xatoni aniqlashga harakat qil.
-- Muammo sababini tushuntir.
-- Kerak bo'lsa to'g'ri kodni ber.
-- "Mana shu joyga mana buni qo'ying" kabi
-  aniq ko'rsatmalar ber.
-- Foydalanuvchi yubormagan loyiha fayllarini
-  o'zingdan uydirma.
-- EduVora loyihasining ichki kodlariga avtomatik
-  kirish huquqing yo'q.
+1. Xatoni aniqlashga harakat qil.
+2. Xato sababini tushuntir.
+3. To'g'ri kodni ber.
+4. Qaysi joyga nima qo'yish kerakligini aniq ayt.
+5. Kerak bo'lsa to'liq tayyor kod ber.
 
-Agar foydalanuvchi rasm yoki screenshot yuborsa:
+Masalan:
 
-- Rasmda ko'rinayotgan ma'lumotni tahlil qil.
-- Kod bo'lsa, kodni tushuntir.
-- Xato bo'lsa, xatoni tushuntir.
-- Tuzatish uchun aniq qadamlar ber.
+"Eski koddagi shu qismni o'chiring.
+O'rniga mana buni qo'ying."
 
-MUHIM XAVFSIZLIK QOIDALARI:
+SCREENSHOT:
 
-Hech qachon quyidagilarni ko'rsatma yoki takrorlama:
+Agar foydalanuvchi screenshot yuborsa:
+
+- Rasmni tahlil qil.
+- Undagi xatoni tushuntir.
+- Kod ko'rinsa, kodni tahlil qil.
+- Tuzatish uchun aniq ko'rsatma ber.
+
+MUHIM:
+
+Sen EduVora loyihasining ichki fayllariga avtomatik
+kirish huquqiga ega emassan.
+
+Faqat foydalanuvchi yuborgan ma'lumotni tahlil qil.
+
+Foydalanuvchi yubormagan kodni o'zingdan uydirma.
+
+MAXFIY MA'LUMOTLAR:
+
+Hech qachon quyidagilarni qayta yozma yoki ko'rsatma:
 
 - API key
 - BOT_TOKEN
@@ -108,27 +130,33 @@ Hech qachon quyidagilarni ko'rsatma yoki takrorlama:
 - Railway Variables
 - maxfiy tokenlar
 - serverdagi maxfiy ma'lumotlar
-- foydalanuvchilarning maxfiy ma'lumotlari
+- boshqa maxfiy ma'lumotlar
 
-Agar foydalanuvchi yuborgan kod yoki rasm ichida
-API key, token yoki boshqa maxfiy ma'lumot ko'rinsa:
+Agar foydalanuvchi yuborgan kod yoki screenshot ichida
+API key yoki token ko'rinsa, uni javobda takrorlama.
 
-Uni javobda qayta yozma.
+Buning o'rniga:
 
-Faqat shunga o'xshash ogohlantirish ber:
+"⚠️ Rasm yoki kod ichida maxfiy kalit/token ko'rinmoqda.
+Uni oshkor qilmaslik uchun almashtirish kerak."
 
-"⚠️ Rasm/kod ichida maxfiy kalit yoki token ko'rinmoqda.
-Uni oshkor qilmaslik va xavfsizlik uchun almashtirish kerak."
+deb ogohlantir.
+
+INTERNET:
 
 Internetdan ma'lumot qidirma.
 
 O'zingni internet qidiruvi qilayotgandek ko'rsatma.
 
+JAVOB USLUBI:
+
 Javoblarni asosan o'zbek tilida ber.
 
-Javoblar sodda, aniq va foydali bo'lsin.
+Sodda, aniq va tushunarli yoz.
 
-Agar foydalanuvchi "Sen kimsan?" deb so'rasa:
+Keraksiz uzun javoblardan qoch.
+
+Agar foydalanuvchi "Sen kimsan?" desa:
 
 "👋 Men EduVora Assistantman.
 
@@ -138,34 +166,30 @@ yordam berish uchun yaratilganman."
 
 mazmunida javob ber.
 
-EduVora haqida savol berilganda faqat mavjud ma'lumotlarga
-tayan. EduVora funksiyalarini o'zingcha uydirma.
+EduVora haqida savol berilganda faqat EduVora'ning
+mavjud funksiyalariga tayan.
 
-Foydalanuvchiga doimo yordam berishga harakat qil.
+EduVora funksiyalarini o'zingcha uydirma.
+
+Foydalanuvchiga imkon qadar foydali javob ber.
 """
 
 
 # =========================================================
-# GEMINI REQUEST
+# GEMINI / EDUVORA REQUEST
 # =========================================================
 
 async def ask_eduvora(prompt: str) -> str:
     try:
 
-        response = await asyncio.to_thread(
-            gemini_client.models.generate_content,
-
+        interaction = await asyncio.to_thread(
+            gemini_client.interactions.create,
             model=GEMINI_MODEL,
-
-            contents=prompt,
-
-            config=types.GenerateContentConfig(
-                system_instruction=ASSISTANT_INSTRUCTION,
-                temperature=0.7,
-            ),
+            input=prompt,
+            system_instruction=ASSISTANT_INSTRUCTION,
         )
 
-        answer = response.text
+        answer = interaction.output_text
 
         if not answer:
             return (
@@ -248,7 +272,6 @@ async def subjects_handler(message: Message):
 
     await message.answer(
         "📚 <b>EduVora Fanlari</b>\n\n"
-
         "📐 Matematika\n"
         "📖 Ona tili\n"
         "🇬🇧 Ingliz tili\n"
@@ -257,7 +280,6 @@ async def subjects_handler(message: Message):
         "🧬 Biologiya\n"
         "🏛️ Tarix\n"
         "💻 Informatika\n\n"
-
         "🌐 To‘liq fanlar va mavzularni "
         "EduVora Mini App orqali ko‘rishingiz mumkin.",
         parse_mode="HTML",
@@ -273,22 +295,15 @@ async def help_handler(message: Message):
 
     await message.answer(
         "🧠 <b>EduVora Yordam</b>\n\n"
-
         "📚 <b>Fanlar</b>\n"
         "Fanlar va mavzularni ko‘rish uchun ishlatiladi.\n\n"
-
         "🌐 <b>EduVora Mini App</b>\n"
-        "Sayt ko‘rinishidagi EduVora platformasini ochadi.\n\n"
-
+        "EduVora platformasini ochadi.\n\n"
         "🤖 <b>EduVora Assistant</b>\n"
         "Savollar, masalalar, dasturlash va xatolarni "
         "tushuntirishda yordam beradi.\n\n"
-
         "👤 <b>Profil</b>\n"
-        "Foydalanuvchi profilingizni ko‘rsatadi.\n\n"
-
-        "Agar Assistant'dan foydalanmoqchi bo‘lsangiz, "
-        "Mini App ichidagi 🤖 Assistant bo‘limini oching.",
+        "Foydalanuvchi profilingizni ko‘rsatadi.",
         parse_mode="HTML",
     )
 
@@ -320,15 +335,13 @@ async def photo_handler(message: Message):
 
     await message.answer(
         "📸 Rasm qabul qilindi!\n\n"
-        "🤖 Rasmni tahlil qilish funksiyasi "
-        "EduVora Assistant backend'iga ulanmoqda.\n\n"
-        "Keyingi bosqichda screenshotdagi kod yoki "
-        "masalani Assistant tahlil qiladi."
+        "🤖 Rasm tahlili Mini App Assistant backendiga "
+        "ulanadigan keyingi bosqichda ishlaydi."
     )
 
 
 # =========================================================
-# TEXT → EDUVORA ASSISTANT
+# TEXT → ASSISTANT
 # =========================================================
 
 @dp.message(F.text)
@@ -339,12 +352,14 @@ async def assistant_handler(message: Message):
     if not text:
         return
 
-    # Menyu tugmalari bu yerda qayta ishlanmaydi
-    if text in [
-        "📚 Fanlar",
-        "🧠 Yordam",
-        "👤 Profil",
-    ]:
+    # Menu tugmalari
+    if text == "📚 Fanlar":
+        return
+
+    if text == "🧠 Yordam":
+        return
+
+    if text == "👤 Profil":
         return
 
     await message.bot.send_chat_action(
@@ -366,8 +381,7 @@ async def unknown_handler(message: Message):
 
     await message.answer(
         "🤔 Bu xabarni tushunmadim.\n\n"
-        "EduVora Mini App yoki quyidagi menyudan "
-        "kerakli bo‘limni tanlang 👇",
+        "Quyidagi menyudan kerakli bo‘limni tanlang 👇",
         reply_markup=main_menu(),
     )
 
@@ -384,7 +398,7 @@ async def main():
 
 
 # =========================================================
-# ENTRY POINT
+# START
 # =========================================================
 
 if __name__ == "__main__":
