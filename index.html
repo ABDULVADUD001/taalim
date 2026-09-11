@@ -2,467 +2,368 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
-    <title>EduVora | Ta'lim</title>
+    <title>EduVora | Ta'lim platformasi</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- APP -->
-    <div id="app">
+<div id="app" class="app">
 
-        <!-- HEADER -->
-        <header class="header">
-            <div class="brand">
-                <div class="logo">E</div>
+    <!-- ================= HEADER ================= -->
 
-                <div>
-                    <h1>EduVora</h1>
-                    <span>Ta'lim platformasi</span>
-                </div>
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                E
             </div>
 
-            <button class="profile-btn" onclick="openSection('profile')">
-                👤
-            </button>
-        </header>
+            <div class="brand-text">
+                <h1>EduVora</h1>
+                <span>Ta'lim platformasi</span>
+            </div>
+
+        </div>
+
+    </header>
 
 
-        <!-- SEARCH -->
-        <section class="search-section">
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- ================= HOME ================= -->
+
+        <section
+            id="homePage"
+            class="page active"
+        >
+
+            <!-- SEARCH -->
 
             <div class="search-box">
-                <span>🔎</span>
+
+                <span class="search-icon">⌕</span>
 
                 <input
-                    type="text"
                     id="searchInput"
-                    placeholder="Fan, darslik yoki mavzu qidiring..."
+                    type="text"
+                    placeholder="Fan yoki mavzu qidiring..."
+                    autocomplete="off"
                 >
+
             </div>
 
-        </section>
-
-
-        <!-- HOME -->
-        <main id="homeSection" class="section active">
 
             <!-- WELCOME -->
-            <section class="welcome-card">
 
-                <div>
-                    <span class="small-text">Xush kelibsiz 👋</span>
+            <div class="welcome-card">
+
+                <div class="welcome-content">
+
+                    <span class="welcome-small">
+                        EDUVORA
+                    </span>
 
                     <h2>
-                        Bilimingizni<br>
-                        <span>EduVora</span> bilan oshiring.
+                        Bilimingizni
+                        <br>
+                        EduVora bilan oshiring
                     </h2>
 
                     <p>
-                        1–11-sinf fanlari, darsliklar va
-                        masalalarni yechishda yordam.
+                        Fanlarni tanlang va mavzularni
+                        bosqichma-bosqich o‘rganing.
                     </p>
+
                 </div>
 
                 <div class="welcome-icon">
                     🎓
                 </div>
 
-            </section>
+            </div>
 
 
-            <!-- QUICK ACTIONS -->
-            <section class="section-block">
+            <!-- SUBJECTS -->
 
-                <div class="section-title">
-                    <h2>Tezkor bo‘limlar</h2>
+            <div class="section-header">
+
+                <div>
+                    <span class="section-label">
+                        TA'LIM
+                    </span>
+
+                    <h2>Fanlar</h2>
                 </div>
 
-                <div class="quick-grid">
-
-                    <button
-                        class="quick-card"
-                        onclick="openSection('subjects')"
-                    >
-                        <div class="quick-icon">📚</div>
-                        <strong>Fanlar</strong>
-                        <span>1–11-sinf</span>
-                    </button>
+            </div>
 
 
-                    <button
-                        class="quick-card"
-                        onclick="openSection('solver')"
-                    >
-                        <div class="quick-icon">📸</div>
-                        <strong>Rasm orqali</strong>
-                        <span>Masalani yechish</span>
-                    </button>
+            <div
+                id="homeSubjectsContainer"
+                class="subjects-grid"
+            ></div>
+
+        </section>
 
 
-                    <button
-                        class="quick-card"
-                        onclick="openSection('help')"
-                    >
-                        <div class="quick-icon">🧠</div>
-                        <strong>Yordam</strong>
-                        <span>EduVora AI</span>
-                    </button>
+        <!-- ================= SUBJECTS ================= -->
 
+        <section
+            id="subjectsPage"
+            class="page"
+        >
 
-                    <button
-                        class="quick-card"
-                        onclick="openSection('profile')"
-                    >
-                        <div class="quick-icon">👤</div>
-                        <strong>Profil</strong>
-                        <span>Hisobingiz</span>
-                    </button>
+            <div class="page-header">
 
+                <button
+                    class="back-btn"
+                    data-back="homePage"
+                >
+                    ←
+                </button>
+
+                <div>
+                    <span class="section-label">
+                        EDUVORA
+                    </span>
+
+                    <h2>Fanlar</h2>
                 </div>
 
-            </section>
+            </div>
+
+            <div
+                id="subjectsContainer"
+                class="subjects-list"
+            ></div>
+
+        </section>
 
 
-            <!-- SUBJECTS PREVIEW -->
-            <section class="section-block">
+        <!-- ================= TOPICS ================= -->
 
-                <div class="section-title">
+        <section
+            id="topicsPage"
+            class="page"
+        >
 
-                    <h2>📚 Fanlar</h2>
+            <div class="page-header">
 
-                    <button onclick="openSection('subjects')">
-                        Barchasi →
-                    </button>
+                <button
+                    class="back-btn"
+                    data-back="subjectsPage"
+                >
+                    ←
+                </button>
 
+                <div>
+                    <span class="section-label">
+                        MAVZULAR
+                    </span>
+
+                    <h2 id="topicsTitle">
+                        Fan
+                    </h2>
                 </div>
 
-
-                <div class="subjects-scroll">
-
-                    <button class="subject-card math">
-                        <div>📐</div>
-                        <strong>Matematika</strong>
-                        <span>1–11-sinf</span>
-                    </button>
+            </div>
 
 
-                    <button class="subject-card language">
-                        <div>📖</div>
-                        <strong>Ona tili</strong>
-                        <span>1–11-sinf</span>
-                    </button>
+            <div
+                id="topicsContainer"
+                class="topics-list"
+            ></div>
+
+        </section>
 
 
-                    <button class="subject-card english">
-                        <div>🇬🇧</div>
-                        <strong>Ingliz tili</strong>
-                        <span>1–11-sinf</span>
-                    </button>
+        <!-- ================= TOPIC DETAIL ================= -->
 
+        <section
+            id="topicDetailPage"
+            class="page"
+        >
 
-                    <button class="subject-card physics">
-                        <div>⚛️</div>
-                        <strong>Fizika</strong>
-                        <span>6–11-sinf</span>
-                    </button>
+            <div class="page-header">
 
+                <button
+                    class="back-btn"
+                    data-back="topicsPage"
+                >
+                    ←
+                </button>
 
-                    <button class="subject-card chemistry">
-                        <div>🧪</div>
-                        <strong>Kimyo</strong>
-                        <span>7–11-sinf</span>
-                    </button>
+                <div>
+                    <span class="section-label">
+                        MAVZU
+                    </span>
 
-
-                    <button class="subject-card biology">
-                        <div>🧬</div>
-                        <strong>Biologiya</strong>
-                        <span>5–11-sinf</span>
-                    </button>
-
+                    <h2 id="topicDetailTitle">
+                        1-mavzu
+                    </h2>
                 </div>
 
-            </section>
+            </div>
 
 
-            <!-- BOOKS -->
-            <section class="section-block">
-
-                <div class="section-title">
-                    <h2>📖 Darsliklar</h2>
-
-                    <button>
-                        Ko‘rish →
-                    </button>
-                </div>
+            <article
+                id="topicContent"
+                class="topic-content"
+            ></article>
 
 
-                <div class="books-placeholder">
+            <div class="topic-navigation">
 
-                    <div class="book-placeholder-icon">
-                        📚
+                <button
+                    id="previousTopic"
+                    class="secondary-btn"
+                >
+                    ← Oldingi
+                </button>
+
+                <button
+                    id="nextTopic"
+                    class="primary-btn"
+                >
+                    Keyingi →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ASSISTANT ================= -->
+
+        <section
+            id="assistantPage"
+            class="page"
+        >
+
+            <div class="page-header">
+
+                <div class="assistant-title">
+
+                    <div class="assistant-avatar">
+                        🤖
                     </div>
 
-                    <h3>Darsliklar tez orada</h3>
+                    <div>
+                        <span class="section-label">
+                            EDUVORA
+                        </span>
+
+                        <h2>EduVora Assistant</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="assistant-card">
+
+                <div class="assistant-welcome">
+
+                    <div class="assistant-big-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Salom! Men EduVora Assistant.
+                    </h3>
 
                     <p>
-                        1–11-sinf darsliklari shu yerda
-                        tartibli ko‘rinishda joylashtiriladi.
+                        EduVora platformasi, fanlar va
+                        mavzular bo‘yicha yordam beraman.
                     </p>
 
                 </div>
 
-            </section>
 
-        </main>
-
-
-        <!-- SUBJECTS -->
-        <main id="subjectsSection" class="section">
-
-            <div class="page-header">
-
-                <button onclick="goHome()" class="back-btn">
-                    ←
-                </button>
-
-                <div>
-                    <h2>📚 Fanlar</h2>
-                    <p>O‘zingizga kerakli fanni tanlang</p>
-                </div>
-
-            </div>
+                <div
+                    id="helpMessages"
+                    class="help-messages"
+                ></div>
 
 
-            <div class="all-subjects">
+                <div class="assistant-examples">
 
-                <button class="large-subject">
-                    <div>📐</div>
-                    <section>
-                        <strong>Matematika</strong>
-                        <span>1–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>📖</div>
-                    <section>
-                        <strong>Ona tili</strong>
-                        <span>1–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>🇬🇧</div>
-                    <section>
-                        <strong>Ingliz tili</strong>
-                        <span>1–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>⚛️</div>
-                    <section>
-                        <strong>Fizika</strong>
-                        <span>6–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>🧪</div>
-                    <section>
-                        <strong>Kimyo</strong>
-                        <span>7–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>🧬</div>
-                    <section>
-                        <strong>Biologiya</strong>
-                        <span>5–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>🏛️</div>
-                    <section>
-                        <strong>Tarix</strong>
-                        <span>5–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-
-                <button class="large-subject">
-                    <div>💻</div>
-                    <section>
-                        <strong>Informatika</strong>
-                        <span>1–11-sinf</span>
-                    </section>
-                    <b>→</b>
-                </button>
-
-            </div>
-
-        </main>
-
-
-        <!-- IMAGE SOLVER -->
-        <main id="solverSection" class="section">
-
-            <div class="page-header">
-
-                <button onclick="goHome()" class="back-btn">
-                    ←
-                </button>
-
-                <div>
-                    <h2>📸 Rasm orqali ishlash</h2>
-                    <p>Masalani rasmga oling</p>
-                </div>
-
-            </div>
-
-
-            <div class="solver-card">
-
-                <div class="camera-icon">
-                    📷
-                </div>
-
-                <h2>Rasmingizni yuklang</h2>
-
-                <p>
-                    Masala yoki topshiriq rasmini yuboring.
-                    EduVora uni o‘qib, javobini topishga yordam beradi.
-                </p>
-
-
-                <label class="upload-btn">
-
-                    📸 Rasm tanlash
-
-                    <input
-                        type="file"
-                        id="imageInput"
-                        accept="image/*"
-                        capture="environment"
-                        hidden
+                    <button
+                        class="example-question"
+                        data-question="Matematika fanida qanday mavzular bor?"
                     >
+                        📐 Matematika mavzulari
+                    </button>
 
-                </label>
+                    <button
+                        class="example-question"
+                        data-question="EduVora nima?"
+                    >
+                        💡 EduVora nima?
+                    </button>
 
+                    <button
+                        class="example-question"
+                        data-question="Menga o‘qishda yordam ber"
+                    >
+                        📚 O‘qishda yordam
+                    </button>
 
-                <div id="imagePreview" class="image-preview"></div>
-
-            </div>
-
-        </main>
-
-
-        <!-- HELP -->
-        <main id="helpSection" class="section">
-
-            <div class="page-header">
-
-                <button onclick="goHome()" class="back-btn">
-                    ←
-                </button>
-
-                <div>
-                    <h2>🧠 Yordam</h2>
-                    <p>EduVora yordamchisi</p>
-                </div>
-
-            </div>
-
-
-            <div class="ai-card">
-
-                <div class="ai-icon">
-                    🧠
-                </div>
-
-                <h2>EduVora AI</h2>
-
-                <p>
-                    EduVora haqida ma'lumot, darsliklar,
-                    fanlar va platforma imkoniyatlari
-                    bo‘yicha yordam oling.
-                </p>
-
-
-                <div class="example-question">
-                    <span>💬</span>
-
-                    <p>
-                        “7-sinf matematika darsligi bormi?”
-                    </p>
                 </div>
 
 
-                <div class="example-question">
-                    <span>💬</span>
-
-                    <p>
-                        “EduVora Premium nima?”
-                    </p>
-                </div>
-
-
-                <div class="ai-input">
+                <div class="assistant-input">
 
                     <input
-                        id="aiQuestion"
+                        id="helpInput"
                         type="text"
                         placeholder="Savolingizni yozing..."
+                        autocomplete="off"
                     >
 
-                    <button onclick="askAI()">
+                    <button
+                        id="helpSend"
+                        class="send-btn"
+                    >
                         ➤
                     </button>
 
                 </div>
 
-                <div id="aiAnswer"></div>
-
             </div>
 
-        </main>
+        </section>
 
 
-        <!-- PROFILE -->
-        <main id="profileSection" class="section">
+        <!-- ================= PROFILE ================= -->
+
+        <section
+            id="profilePage"
+            class="page"
+        >
 
             <div class="page-header">
 
-                <button onclick="goHome()" class="back-btn">
-                    ←
-                </button>
-
                 <div>
-                    <h2>👤 Profil</h2>
-                    <p>EduVora hisobingiz</p>
+                    <span class="section-label">
+                        EDUVORA
+                    </span>
+
+                    <h2>Profil</h2>
                 </div>
 
             </div>
@@ -470,14 +371,16 @@
 
             <div class="profile-card">
 
-                <div class="avatar">
+                <div class="profile-avatar">
                     👤
                 </div>
 
-                <h2>EduVora foydalanuvchisi</h2>
+                <h2 id="profileName">
+                    Foydalanuvchi
+                </h2>
 
                 <p>
-                    Telegram orqali kirilgan profil
+                    EduVora o‘quvchisi
                 </p>
 
             </div>
@@ -485,102 +388,82 @@
 
             <div class="profile-stats">
 
-                <div>
-                    <strong>0</strong>
-                    <span>Masalalar</span>
+                <div class="stat-card">
+
+                    <strong id="profileTopics">
+                        0
+                    </strong>
+
+                    <span>
+                        O‘rganilgan mavzu
+                    </span>
+
                 </div>
 
-                <div>
-                    <strong>0</strong>
-                    <span>Darslar</span>
-                </div>
+                <div class="stat-card">
 
-                <div>
-                    <strong>0</strong>
-                    <span>XP</span>
+                    <strong id="profileSubjects">
+                        0
+                    </strong>
+
+                    <span>
+                        Fan
+                    </span>
+
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="premium-card">
-
-                <span>⭐</span>
-
-                <div>
-                    <strong>EduVora Premium</strong>
-                    <p>
-                        Ko‘proq imkoniyatlardan foydalaning.
-                    </p>
-                </div>
-
-                <button>
-                    →
-                </button>
-
-            </div>
-
-        </main>
+    </main>
 
 
-        <!-- BOTTOM NAVIGATION -->
-        <nav class="bottom-nav">
+    <!-- ================= BOTTOM NAV ================= -->
 
-            <button
-                class="nav-item active"
-                onclick="openSection('home')"
-                data-section="home"
-            >
-                <span>⌂</span>
-                <small>Bosh sahifa</small>
-            </button>
+    <nav class="bottom-nav">
 
-
-            <button
-                class="nav-item"
-                onclick="openSection('subjects')"
-                data-section="subjects"
-            >
-                <span>📚</span>
-                <small>Fanlar</small>
-            </button>
+        <button
+            class="nav-item active"
+            data-page="homePage"
+        >
+            <span>⌂</span>
+            <small>Bosh sahifa</small>
+        </button>
 
 
-            <button
-                class="nav-item"
-                onclick="openSection('solver')"
-                data-section="solver"
-            >
-                <span>📸</span>
-                <small>Rasm</small>
-            </button>
+        <button
+            class="nav-item"
+            data-page="subjectsPage"
+        >
+            <span>📚</span>
+            <small>Fanlar</small>
+        </button>
 
 
-            <button
-                class="nav-item"
-                onclick="openSection('help')"
-                data-section="help"
-            >
-                <span>🧠</span>
-                <small>Yordam</small>
-            </button>
+        <button
+            class="nav-item"
+            data-page="assistantPage"
+        >
+            <span>🤖</span>
+            <small>Assistant</small>
+        </button>
 
 
-            <button
-                class="nav-item"
-                onclick="openSection('profile')"
-                data-section="profile"
-            >
-                <span>👤</span>
-                <small>Profil</small>
-            </button>
+        <button
+            class="nav-item"
+            data-page="profilePage"
+        >
+            <span>👤</span>
+            <small>Profil</small>
+        </button>
 
-        </nav>
+    </nav>
 
-    </div>
+</div>
 
 
-    <script src="app.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
